@@ -2,7 +2,7 @@
 
 This is a small tool for specifying CAN data structures in a format
 that's easier to use and more structural than the more formats
-supported by `cantools` (DBC, KCD, etc.). See `[test.yaml]` for an
+supported by `cantools` (DBC, KCD, etc.). See `test.yaml` for an
 example.
 
 ## Role
