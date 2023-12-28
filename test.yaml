@@ -1,0 +1,43 @@
+# Test CAN database definition.
+name: DAVIID
+
+# This section is for data structures that are only used within other
+# data structures and messages; they do not have associated CAN IDs.
+structs:
+  MotorTelemetry:
+    # Otherwise (i.e., for a struct), write each element preceded by a
+    # hyphen, because they need to be a strictly ordered ordered YAML
+    # list.
+    - position:
+        # `range` is the only required parameter.
+        range: [-180, 180]
+
+        # `unit` can optionally be set.
+        unit: mm
+
+        # By default signals are 8 bits wide; we can override to any
+        # number of bits.
+        size: 10
+    # We can include other enums and data structures recursively.
+    - direction: MotorDir
+
+  # Data structures don't have to be in any particular order; the C++
+  # backend figures out the right order to satisfy C++'s rules, which
+  # is always possible if there are no cyclic includes.
+  MotorDir:
+    # Use the special keyword `enum` like so to generate an enum.
+    enum: [stop, extend, retract]
+
+# Structures in this section have exactly the same schema as those in
+# `structs`, except they are assigned an automatically incrementing
+# CAN ID number.
+messages:
+  EStop:
+    # `bool` is magic and always in scope.
+    - stop: bool
+  PitchControl:
+    - left: MotorDir
+    - right: MotorDir
+  PitchPositionTelem:
+    - left: MotorTelemetry
+    - right: MotorTelemetry
