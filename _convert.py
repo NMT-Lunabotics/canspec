@@ -233,6 +233,7 @@ class CANStruct:
     ) -> None:
         """Serialize to a C++ header."""
         if self.is_enum:
+            output('')
             output(f'enum class {self.name} {{')
             for idx, item in enumerate(self.enum_members):
                 output(f'  {item} = {idx},')
@@ -263,6 +264,7 @@ class CANStruct:
             output('  return os;')
             output('}')
         else:
+            output('')
             output(f'struct {self.name} {{')
             for name, typ in self.struct_members:
                 typename = 'double' if isinstance(typ, CANSignal) else typ
