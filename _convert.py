@@ -239,16 +239,19 @@ class CANStruct:
             output('};')
 
             # Use simple casting to convert.
+            output('')
             output(f'inline {self.name} {self.name}_deserialize(' +
                    'uint64_t buffer) {')
             output(f'  return ({self.name})buffer;')
             output('}')
 
+            output('')
             output(f'inline uint64_t serialize({self.name} data) {{')
             output('  return (uint64_t)data;')
             output('}')
 
             # Formatted output.
+            output('')
             output('inline std::ostream &operator<<(std::ostream &os, const '
                    f'{self.name} &self) {{')
             output('  switch (self) {')
@@ -272,6 +275,7 @@ class CANStruct:
             # to put a static method on an enum. As far as I can tell,
             # the only remaining choice is to write it as an inline
             # function.
+            output('')
             output(f'inline {self.name} {self.name}_deserialize(' +
                    'uint64_t buffer) {')
             output(f'  {self.name} self;')
@@ -293,6 +297,7 @@ class CANStruct:
             output('  return self;')
             output('}')
 
+            output('')
             output(f'inline uint64_t serialize({self.name} data) {{')
             output('  uint64_t ser = 0;')
             for name, typ in reversed(self.struct_members):
@@ -313,6 +318,7 @@ class CANStruct:
             output('}')
 
             # Formatted output.
+            output('')
             output('inline std::ostream &operator<<(std::ostream &os, const '
                    f'{self.name} &self) {{')
             output('  return os << "{ "')
@@ -406,12 +412,14 @@ def database_to_cpp(database: Any) -> str:
 
     # We'll use this function for getting individual bits off of a
     # 64-bit buffer.
+    putline('')
     putline('inline uint64_t read(uint64_t &buffer, uint8_t bits) {')
     putline('  uint64_t res = buffer & ((1 << bits) - 1);')
     putline('  return buffer >>= bits, res;')
     putline('}')
 
     # And a similar function for writing to a 64-bit buffer.
+    putline('')
     putline('inline void write(uint64_t &buffer, uint8_t bits, '
             'uint64_t data) {')
     putline('  buffer <<= bits;')
@@ -426,7 +434,9 @@ def database_to_cpp(database: Any) -> str:
     putline('};')
 
     # `bool` is magic and needs a special serializer & deserializer.
+    putline('')
     putline('inline bool bool_deserialize(uint64_t buffer) { return buffer; }')
+    putline('')
     putline('inline uint64_t serialize(bool data) { return data; }')
 
     # C++ doesn't let us put structs that haven't been defined yet
