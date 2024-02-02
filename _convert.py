@@ -436,8 +436,8 @@ def database_to_cpp(database: Any) -> str:
     putline('  *(uint64_t *)buffer = number;')
     putline('}')
     putline('')
-    putline('inline uint64_t from_buffer(uint8_t *buffer) {')
-    putline('  return *(uint64_t *)buffer;')
+    putline('inline uint64_t from_buffer(const uint8_t *buffer) {')
+    putline('  return *(const uint64_t *)buffer;')
     putline('}')
 
     putline('')
