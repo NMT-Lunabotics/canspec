@@ -410,7 +410,7 @@ def database_to_cpp(database: Any) -> str:
     putline('#include <ostream>')
 
     # Be polite and put everything in a namespace ;3
-    putline(f'namespace can_{database["name"]} {{')
+    putline('namespace can {{')
 
     # We'll use this function for getting individual bits off of a
     # 64-bit buffer.
@@ -441,7 +441,7 @@ def database_to_cpp(database: Any) -> str:
     putline('}')
 
     putline('')
-    putline('enum class MessageDiscriminator {')
+    putline('enum class FrameID {')
     for index, name in enumerate(database['messages'].keys()):
         putline(f'  {name} = {index},')
     putline('};')
