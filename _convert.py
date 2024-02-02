@@ -430,6 +430,16 @@ def database_to_cpp(database: Any) -> str:
     # putline('  buffer |= data << (64 - bits);')
     putline('}')
 
+    # Convenience pointer cast functions.
+    putline('')
+    putline('inline void to_buffer(uint8_t *buffer, uint64_t number) {')
+    putline('  *(uint64_t *)buffer = number;')
+    putline('}')
+    putline('')
+    putline('inline uint64_t from_buffer(uint8_t *buffer) {')
+    putline('  return *(uint64_t *)buffer;')
+    putline('}')
+
     putline('')
     putline('enum class MessageDiscriminator {')
     for index, name in enumerate(database['messages'].keys()):
