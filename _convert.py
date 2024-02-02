@@ -430,6 +430,7 @@ def database_to_cpp(database: Any) -> str:
     # putline('  buffer |= data << (64 - bits);')
     putline('}')
 
+    putline('')
     putline('enum class MessageDiscriminator {')
     for index, name in enumerate(database['messages'].keys()):
         putline(f'  {name} = {index},')
