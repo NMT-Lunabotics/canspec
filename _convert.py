@@ -410,7 +410,7 @@ def database_to_cpp(database: Any) -> str:
     putline('#include <ostream>')
 
     # Be polite and put everything in a namespace ;3
-    putline('namespace can {{')
+    putline('namespace can {')
 
     # We'll use this function for getting individual bits off of a
     # 64-bit buffer.
